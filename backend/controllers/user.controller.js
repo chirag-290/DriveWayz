@@ -11,7 +11,7 @@ module.exports.registeruser = async (req, res, next) => {
     });
   }
 
-  const { fullname, lastname, email, password } = req.body;
+  const { fullname,email,password } = req.body;
 
   const alreadyexisituser=await usermodel.findOne({email});
   if(alreadyexisituser)
