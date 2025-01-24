@@ -15,7 +15,7 @@ const CaptainContext = ({ children }) => {
     const value = {
         captain,
         setCaptain,
-        isLoading,
+        isLoading,  
         setIsLoading,
         error,
         setError,
