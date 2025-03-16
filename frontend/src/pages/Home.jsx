@@ -8,23 +8,23 @@ import ConfirmedRide from "../components/ConfirmedRide";
 import LookingForDriver from "../components/LookingForDriver";
 import WaitingForDriver from "../components/WaitingForDriver";
 
-
 const Home = () =>{
-    const [pickup,setPickup]=useState('');
-    const [destination,setDestination]=useState('');
-    const [panelopen,setPanelopen]=useState(false);
-    const panelRef=useRef(null);
-    const vehiclePanelRef=useRef(null);
-    const confirmRidePanelRef=useRef(null);
-    const panelCloseRef=useRef(null);
-    const vehiclefoundRef=useRef(null);
-    const Waitingfordriverref=useRef(null);
-    const [vehiclePanelOpen,setVehilcePanelOpen]=useState(false);
-    const [confirmedRidePanel,setConfirmedRidePanel]=useState(false);
-    const [vehicleFound,setVehicleFound]=useState(false);
-    const [Waitingfordriver,setWaitingforDriver]=useState(false);
+    const [pickup, setPickup] = useState('');
+    const [destination, setDestination] = useState('');
+    const [panelopen, setPanelopen] = useState(false);
+    const panelRef = useRef(null);
+    const vehiclePanelRef = useRef(null);
+    const confirmRidePanelRef = useRef(null);
+    const panelCloseRef = useRef(null);
+    const vehiclefoundRef = useRef(null);
+    const Waitingfordriverref = useRef(null);
+    const [vehiclePanelOpen, setVehilcePanelOpen] = useState(false);
+    const [confirmedRidePanel, setConfirmedRidePanel] = useState(false);
+    const [vehicleFound, setVehicleFound] = useState(false);
+    const [Waitingfordriver, setWaitingforDriver] = useState(false);
+    const [activeField, setActiveField] = useState(null);
 
-    const submithandler =(e) =>{
+    const submithandler = (e) =>{
         e.preventDefault();
     }
 
@@ -150,7 +150,8 @@ const Home = () =>{
                     <div className="line absolute h-16 w-1 top-[45%] left-10 bg-black rounded-full opacity-60"></div>
                     <input
                     onClick={() =>{
-                        setPanelopen(true)
+                        setActiveField("pickup");
+                        setPanelopen(true);
                     }}
                     value={pickup}
                     onChange={(e) =>{
@@ -164,7 +165,8 @@ const Home = () =>{
                     <br/>
                     <input
                     onClick={() =>{
-                        setPanelopen(true)
+                        setActiveField("destination");
+                        setPanelopen(true);
                     }}
                     value={destination} 
                      onChange={(e) =>{
@@ -174,7 +176,21 @@ const Home = () =>{
                 </form>
                 </div>
                 <div ref={panelRef} className="h-[0] bg-white overflow-hidden">
-                    <LocationSearchPanel  setPanelOpen={setPanelopen}  setVehilcePanelOpen={setVehilcePanelOpen}/>
+                    <LocationSearchPanel 
+                        setPanelOpen={setPanelopen} 
+                        activeField={activeField}
+                        activeValue={activeField === "pickup" ? pickup : destination}
+                        onSelectSuggestion={(suggestion) => {
+                            if(activeField === "pickup"){
+                                setPickup(suggestion.full_address);
+                            } else {
+                                setDestination(suggestion.full_address);
+                            }
+                            setPanelopen(false);
+                            setActiveField(null);
+                        }}
+                        setVehilcePanelOpen={setVehilcePanelOpen}
+                    />
 
                 </div>
                
