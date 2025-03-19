@@ -16,7 +16,7 @@ const Ridepop = (props) => {
       <div className="flex items-center justify-between p-3 bg-yellow-400 rounded-lg mt-4">
         <div className="flex items-center gap-3">
             <img className="h-12 w-12 rounded-full object-cover w-10" src="https://img.freepik.com/free-photo/young-adult-man-wearing-hoodie-beanie_23-2149393636.jpg" alt="" />
-            <h2 className="text-lg font-medium">harsh patel</h2>
+            <h2 className="text-lg font-medium">{props.ride?.user.fullname.firstname+" "+props.ride?.user.fullname.lastname}</h2>
         </div>
         <h5 className="tex-lg font-semibold">2.2Km</h5>
          
@@ -30,7 +30,7 @@ const Ridepop = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Kankariya talab,Bhopal
+                {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -39,14 +39,14 @@ const Ridepop = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Kankariya talab,Bhopal
+                {props.ride?.destination}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg font-medium">$190.20</h3>
+              <h3 className="text-lg font-medium">${props.ride?.fare}</h3>
               <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
             </div>
           </div>
@@ -60,6 +60,7 @@ const Ridepop = (props) => {
         </button>
        <button onClick={() =>{
             props.setconfirmridePopupPanel(true);
+            props.confirmride()
             // props.setridePopupPanel(false);
         }} className="  bg-green-600 text-white font-semibold p-3 px-10 rounded-lg ">
           Accept

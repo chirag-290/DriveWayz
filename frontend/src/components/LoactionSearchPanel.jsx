@@ -1,30 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
 
-const LoactionSearchPanel = (props) => {
-    // Reverted: use the original hardcoded locations array
-    const locations = [
-        "4B, Near kapoor's cafe Sheriyan coding school, Bhopal",
-        "44, Near Malhotra cafe Sheriyan coding school, Bhopal",
-        "44, Near sighinia cafe Sheriyan coding school, Bhopal",
-        "44, Near sharma cafe Sheriyan coding school, Bhopal",
-    ];
+const LocationSearchPanel = ({ suggestions, setVehiclePanel, setPanelOpen, setPickup, setDestination, activeField }) => {
+
+    const handleSuggestionClick = (suggestion) => {
+        if (activeField === 'pickup') {
+            setPickup(suggestion.name)  // Assuming 'name' holds the location name
+        } else if (activeField === 'destination') {
+            setDestination(suggestion.name)
+        }
+        // setPanelOpen(false); // Close panel after selection
+    }
+
     return (
         <div>
-            {locations.map((elem, idx) => {
-                return (
-                    <div key={idx} onClick={() => {
-                        props.setVehilcePanelOpen(true);
-                        props.setPanelOpen(false);
-                    }} className="flex gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2">
-                        <h2 className="bg-[#eee] h-8 flex items-center justify-center w-12 rounded-full">
+            {/* Display fetched suggestions */}
+            {
+                suggestions.map((elem, idx) => (
+                    <div key={idx} onClick={() => handleSuggestionClick(elem)} className='flex gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2 justify-start cursor-pointer'>
+                        <h2 className='bg-[#eee] h-8 flex items-center justify-center w-12 rounded-full'>
                             <i className="ri-map-pin-fill"></i>
                         </h2>
-                        <h4 className="font-medium">{elem}</h4>
+                        <div>
+                            <h4 className='font-medium'>{elem.name}</h4> 
+                            <p className='text-sm text-gray-500'>{elem.full_address}</p> {/* Display additional details */}
+                        </div>
                     </div>
-                )
-            })}
+                ))
+            }
         </div>
     )
 }
-export default LoactionSearchPanel;
+
+export default LocationSearchPanel

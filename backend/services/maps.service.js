@@ -1,4 +1,5 @@
 const axios = require('axios');
+const captainModel = require('../models/captain.model');
 
 module.exports.getAddressCoordinate = async (address) => {
     const accessToken = process.env.GOOGLE_MAP_API_KEY; // Replace with your actual Mapbox access token
@@ -95,4 +96,25 @@ module.exports.getAutocompletesuggestion= async (input) =>{
         console.error('Error fetching suggestions:', err);
         throw err;
     }
+}
+
+
+module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
+    console.log("hello");
+
+    // radius in km
+    console.log("in getcaptains in radius",ltd,lng,radius);
+
+
+    const captains = await captainModel.find({
+        location: {
+            $geoWithin: {
+                $centerSphere: [ [ lng, ltd ], radius / 6371 ]
+            }
+        }
+    });
+
+    return captains;
+
+
 }

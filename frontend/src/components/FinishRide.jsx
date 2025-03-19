@@ -1,6 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 const FinishRide = (props) => {
+  const navigate = useNavigate();
+
+  async function endRide() {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
+
+        rideId: props.rideData._id
+
+    }, {
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+
+    if (response.status === 200) {
+        navigate('/captain-home')
+    }
+
+}
   return (
     <div className="h-[90%]">
       <h5
@@ -21,7 +41,7 @@ const FinishRide = (props) => {
             src="https://img.freepik.com/free-photo/young-adult-man-wearing-hoodie-beanie_23-2149393636.jpg"
             alt=""
           />
-          <h2 className="text-lg font-medium">harsh patel</h2>
+          <h2 className="text-lg font-medium">{props.rideData?.user.fullname.firstname}</h2>
         </div>
         <h5 className="tex-lg font-semibold">2.2Km</h5>
       </div>
@@ -33,7 +53,7 @@ const FinishRide = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Kankariya talab,Bhopal
+                {props.rideData?.pickup}
               </p>
             </div>
           </div>
@@ -42,27 +62,25 @@ const FinishRide = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                Kankariya talab,Bhopal
+               {props.rideData?.destination}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg font-medium">$190.20</h3>
+              <h3 className="text-lg font-medium">${props.rideData.fare}</h3>
               <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
             </div>
           </div>
         </div>
         <div className="mt-6 w-full">
-          <Link
-            to={"/captain-home"}
-            onClick={() => {
-            }}
+          <button
+            onClick={endRide}
             className="w-full mt-10 text-lg flex justify-center  bg-green-600 text-white font-semibold p-3 rounded-lg "
           >
             Finish Ride
-          </Link>
+          </button>
           <p className=" mt-10 text-xs ">Click on finish ride button if you have completed the payment </p>
         </div>
       </div>

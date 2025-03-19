@@ -60,11 +60,11 @@ const Captainsignup = () => {
   return (
     <div className="py-5 px-5  h-screen flex flex-col justify-between">
       <div>
-        <img
+        {/* <img
           className="w-16 mb-10"
           src="https://www.svgrepo.com/show/505031/uber-driver.svg"
           alt="logo"
-        />
+        /> */}
         <form
           action=""
           onSubmit={(e) => {
