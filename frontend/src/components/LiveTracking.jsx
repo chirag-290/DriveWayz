@@ -1,69 +1,46 @@
-import React, { useState, useEffect } from 'react'
-import { LoadScript, GoogleMap, Marker } from '@react-google-maps/api'
+// import React, { useState, useEffect } from 'react';
+// import Map, { Marker } from 'react-map-gl';
 
-const containerStyle = {
-    width: '100%',
-    height: '100%',
-};
+// const LiveTracking = () => {
+//     const [currentPosition, setCurrentPosition] = useState({
+//         latitude: 37.7749,  // Default to San Francisco
+//         longitude: -122.4194
+//     });
 
-const center = {
-    lat: -3.745,
-    lng: -38.523
-};
+//     useEffect(() => {
+//         if ("geolocation" in navigator) {
+//             navigator.geolocation.getCurrentPosition((position) => {
+//                 const { latitude, longitude } = position.coords;
+//                 setCurrentPosition({ latitude, longitude });
+//             });
 
-const LiveTracking = () => {
-    const [ currentPosition, setCurrentPosition ] = useState(center);
+//             const watchId = navigator.geolocation.watchPosition((position) => {
+//                 const { latitude, longitude } = position.coords;
+//                 setCurrentPosition({ latitude, longitude });
+//             });
 
-    useEffect(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            const { latitude, longitude } = position.coords;
-            setCurrentPosition({
-                lat: latitude,
-                lng: longitude
-            });
-        });
+//             return () => navigator.geolocation.clearWatch(watchId);
+//         }
+//     }, []);
 
-        const watchId = navigator.geolocation.watchPosition((position) => {
-            const { latitude, longitude } = position.coords;
-            setCurrentPosition({
-                lat: latitude,
-                lng: longitude
-            });
-        });
+//     return (
+//         <Map
+//             mapboxAccessToken={import.meta.env.VITE_MAPBOX_API_KEY} 
+//             initialViewState={{
+//                 latitude: currentPosition.latitude,
+//                 longitude: currentPosition.longitude,
+//                 zoom: 15
+//             }}
+//             style={{ width: '100%', height: '100vh' }}
+//             mapStyle="mapbox://styles/mapbox/streets-v11"
+//         >
+//             <Marker 
+//                 latitude={currentPosition.latitude} 
+//                 longitude={currentPosition.longitude} 
+//                 color="red"
+//             />
+//         </Map>
+//     );
+// };
 
-        return () => navigator.geolocation.clearWatch(watchId);
-    }, []);
-
-    useEffect(() => {
-        const updatePosition = () => {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const { latitude, longitude } = position.coords;
-
-                console.log('Position updated:', latitude, longitude);
-                setCurrentPosition({
-                    lat: latitude,
-                    lng: longitude
-                });
-            });
-        };
-
-        updatePosition(); // Initial position update
-
-        const intervalId = setInterval(updatePosition, 1000); // Update every 10 seconds
-
-    }, []);
-
-    return (
-        <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-            <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={currentPosition}
-                zoom={15}
-            >
-                <Marker position={currentPosition} />
-            </GoogleMap>
-        </LoadScript>
-    )
-}
-
-export default LiveTracking
+// export default LiveTracking;

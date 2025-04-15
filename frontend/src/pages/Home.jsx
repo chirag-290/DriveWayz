@@ -10,7 +10,8 @@ import WaitingForDriver from "../components/WaitingForDriver";
 import axios from "axios";
 import { SocketContext } from "../../context/SocketProvider";
 import { UserDatacontext } from "../../context/Usercontext";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
+// import MapboxLiveTracking from "../components/LiveTracking";
 
 
 
@@ -36,12 +37,24 @@ const Home = () =>{
     const [ ride, setRide ] = useState(null)
 
     const {socket}=useContext(SocketContext);
-    const {user}=useContext(UserDatacontext);
-    
+    const {user,setUser}=useContext(UserDatacontext);
+
     const navigate = useNavigate()
+    const handleLogout = (e) => {
+        e.preventDefault();
+        console.log("hello in logout")
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+        navigate('/login');
+    };
+    // const {logout}=useContext(UserDatacontext);
+    
 
     useEffect(() => {
-        socket.emit("join", { userType: "user", userId: user._id })
+        if (user) {
+            socket.emit("join", { userType: "user", userId: user._id })
+        }
     }, [ user ])
 
 
@@ -52,7 +65,6 @@ const Home = () =>{
     }
 
     socket.on('ride-confirmed', ride => {
-
 
         setVehicleFound(false)
         setWaitingforDriver(true)
@@ -82,6 +94,8 @@ const Home = () =>{
         }
 
     },[panelopen])
+
+    
 
     useGSAP(function(){
         if(vehiclePanelOpen)
@@ -207,6 +221,8 @@ const Home = () =>{
 
     }
 
+  
+
     async function createRide() {
         console.log("in create ride",pickup,destination,vehicleType);
         const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
@@ -234,10 +250,32 @@ const Home = () =>{
         <div className="h-screen relative overflow-hidden">
              {/* <img className='w-16 absolute left-5 top-5' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="" /> */}
              <h1 className="w-16 absolute left-5 top-5 text-2xl  bold font-bold">RideEase</h1>
+             
+             <div className="absolute right-5 top-5 flex gap-3 z-50">
+             <Link 
+  to={`/ride-history/${user._id}`} 
+  className="text-lg bg-black text-white px-4 py-1 rounded"
+>
+  Ride History
+</Link>
+
+    <button 
+      onClick={(e) => {
+        handleLogout(e);
+      }}
+      className="text-lg bg-black text-white px-4 py-1 rounded"
+    >
+      Logout
+    </button>
+  </div>
+
+
 
              <div className='h-screen w-screen'>
                 {/* image for temporary use  */}
                 <img className="h-full w-full object-cover"  src="https://t3.ftcdn.net/jpg/07/28/30/26/240_F_728302620_Xddnf5Cl0K1ACZurd6yByUzHiHMMIoe6.jpg" alt="" />
+                {/* <MapboxLiveTracking/> */}
+
                 
             </div>
             <div  className="flex flex-col justify-end h-screen absolute top-0 w-full">

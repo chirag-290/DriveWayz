@@ -136,5 +136,50 @@ module.exports.endRide = async (req, res) => {
         return res.status(200).json(ride);
     } catch (err) {
         return res.status(500).json({ message: err.message });
-    } s
+    }
 }
+
+
+module.exports.getRidesByUser = async (req, res) => {
+    try {
+      const { userId } = req.params;
+  
+      const rides = await rideModel.find({ user: userId })
+        .populate('user', 'fullname email')
+        .populate('captain', 'fullname') // optional: populate captain info
+        .sort({ createdAt: -1 }); // latest first, if timestamps are enabled
+  
+      res.status(200).json({
+        success: true,
+        count: rides.length,
+        rides
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: 'Server Error',
+        error: err.message
+      });
+    }
+  };
+module.exports.getRidesByCaptain = async (req, res) => {
+    try {
+      const { captainId } = req.params;
+  
+      const rides = await rideModel.find({ captain: captainId })
+        .populate('user', 'fullname') // optional: populate user info
+        .sort({ createdAt: -1 }); // latest first, if timestamps are enabled
+  
+      res.status(200).json({
+        success: true,
+        count: rides.length,
+        rides
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: 'Server Error',
+        error: err.message
+      });
+    }
+  };

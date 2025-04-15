@@ -19,7 +19,8 @@ const CaptianHome = () => {
   const [ride,setRide]=useState(null);
 
   const {socket }=useContext(SocketContext);
-  const {captain} =useContext(CaptainDataContext);
+  const {captain,setCaptain} =useContext(CaptainDataContext);
+  const navigate=useNavigate();
 
   useEffect(() => {
     console.log("captain",captain);
@@ -101,7 +102,7 @@ const CaptianHome = () => {
   
   async function confirmRide() {
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/`, {
 
         rideId: ride._id,
         captainId: captain._id,
@@ -117,24 +118,39 @@ const CaptianHome = () => {
     setconfirmridePopupPanel(true)
 
 }
+const handleLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('captain');
+  setCaptain(null);
+  navigate('/captain-login');
+};
 
 
   return (
     <div className="h-screen">
-      <div className="fixed p-3 top-0 flex items-center justify-between w-screen">
-        {/* <img
-          className="w-16"
-          src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-          alt=""
-        /> */}
-        <h1 className="w-16 absolute left-5 top-5 text-2xl  bold font-bold">RideEase</h1>
-        <Link
-          to="/home"
-          className="h-10 bg-white flex items-center justify-center rounded-full"
-        >
-          {/* <i className="ri-logout-box-line text-lg font-medium"></i> */}
-        </Link>
-      </div>
+    <div className="fixed p-3 top-0 flex items-center justify-between w-screen z-20 bg-white shadow-md">
+  <h1 className="text-2xl font-bold text-gray-800">RideEase</h1>
+
+  <div className="flex gap-3">
+    <Link
+      to={`/captain-history/${captain._id}`} 
+      className="flex items-center gap-2 bg-gray-800 hover:bg-gray-400 text-white px-4 py-2 rounded-full shadow transition"
+    >
+      <i className="ri-history-line text-lg"></i>
+      Ride History
+    </Link>
+    
+    <button
+      onClick={handleLogout}
+      className="flex items-center gap-2 bg-gray-800 hover:bg-gray-400 text-white px-4 py-2 rounded-full shadow transition"
+    >
+      <i className="ri-logout-box-line text-lg"></i>
+      Logout
+    </button>
+  </div>
+</div>
+
+      
 
       <div className="h-3/5">
         <img
@@ -142,6 +158,7 @@ const CaptianHome = () => {
           src="https://t3.ftcdn.net/jpg/07/28/30/26/240_F_728302620_Xddnf5Cl0K1ACZurd6yByUzHiHMMIoe6.jpg"
           alt=""
         />
+        
       </div>
       <div className="h-2/5 p-6">
         <CaptianDetails />

@@ -1,6 +1,6 @@
 import React, { useState,useContext } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import { UserDatacontext } from "../../context/Usercontext";
+// import { UserDatacontext } from "../../context/Usercontext";
 import axios from "axios";
 
 const Userlogin = () => {
@@ -8,7 +8,7 @@ const Userlogin = () => {
     const [password,setpassword]=useState('')
     const [userData,setuserData]=useState({})
 
-    const {user,setUser}=React.useContext(UserDatacontext);
+    // const {user,setUser}=React.useContext(UserDatacontext);
 
     const navigate=useNavigate();
 
@@ -27,8 +27,9 @@ const Userlogin = () => {
         {
           console.log("in respoonse");
           const data=response.data;
-          setUser(data.user);
+          // setUser(data.user);
           localStorage.setItem("token",data.token);
+          localStorage.setItem("user",JSON.stringify(data.user));
           
             navigate("/home");
         }

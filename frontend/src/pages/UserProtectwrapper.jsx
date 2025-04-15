@@ -49,26 +49,29 @@ const UserProtectWrapper = ({
 
     useEffect(() => {
         if (!token) {
-            navigate('/login')
+            navigate('/login');
+            return;
         }
-
+    
         axios.get(`${import.meta.env.VITE_BASE_URL}/users/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        }).then(response => {
+        })
+        .then(response => {
             if (response.status === 200) {
-                setUser(response.data)
-                setIsLoading(false)
+                setUser(response.data);
+                setIsLoading(false);
             }
         })
-            .catch(err => {
-                console.log(err)
-                localStorage.removeItem('token')
-                navigate('/login')
-            })
-    }, [ token ])
-
+        .catch(err => {
+            console.log(err);
+            localStorage.removeItem('token');
+            setUser(null);
+            navigate('/login');
+        });
+    }, [token]);
+    
     if (isLoading) {
         return (
             <div>Loading...</div>

@@ -39,6 +39,9 @@ router.post('/end-ride',
     rideController.endRide
 )
 
+router.get('/user/:userId', rideController.getRidesByUser);
+router.get('/captain/:captainId', rideController.getRidesByCaptain);
+
 
 
 module.exports = router;

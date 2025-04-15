@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 
 
 export const CaptainDataContext = createContext();
@@ -8,9 +8,17 @@ const CaptainContext = ({ children }) => {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ error, setError ] = useState(null);
 
-    const updateCaptain = (captainData) => {
+    useEffect(() => {
+        const storedCaptain = localStorage.getItem('captain');
+        if (storedCaptain) {
+          setCaptain(JSON.parse(storedCaptain));
+        }
+      }, []);
+
+      const updateCaptain = (captainData) => {
         setCaptain(captainData);
-    };
+        localStorage.setItem('captain', JSON.stringify(captainData)); // optional sync
+      };
 
     const value = {
         captain,
@@ -21,6 +29,7 @@ const CaptainContext = ({ children }) => {
         setError,
         updateCaptain
     };
+
 
     return (
         <CaptainDataContext.Provider value={value}>
