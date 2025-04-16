@@ -60,8 +60,6 @@ const CaptianHome = () => {
   socket.on('new-ride', (data) => {
     setRide(data);
     setridePopupPanel(true);
-    // console.log('data is', data)
-    console.log("in new ride",data);
   })
 
   useGSAP(
@@ -102,7 +100,7 @@ const CaptianHome = () => {
   
   async function confirmRide() {
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/`, {
+    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/confirm`, {
 
         rideId: ride._id,
         captainId: captain._id,
@@ -113,6 +111,8 @@ const CaptianHome = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         }
     })
+
+    console.log("in captain home in hdsifshilfsf",response.data);
 
     setridePopupPanel(false)
     setconfirmridePopupPanel(true)

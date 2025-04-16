@@ -66,6 +66,8 @@ const Home = () =>{
 
     socket.on('ride-confirmed', ride => {
 
+        console.log("jgfnk;jfflidblfijheoibgluvugewi;ofhewuodcedboewgfkydduioewjiyfdvsjchfvewjkfchsulyfyewugf",ride);
+
         setVehicleFound(false)
         setWaitingforDriver(true)
         setRide(ride)
@@ -238,7 +240,7 @@ const Home = () =>{
     }
 
     socket.on('ride-started', ride => {
-        console.log("ride")
+        // console.log("ride")
         setWaitingforDriver(false)
         navigate('/riding', { state: { ride } }) // Updated navigate to include ride data
     })
