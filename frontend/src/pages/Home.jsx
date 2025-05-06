@@ -222,7 +222,7 @@ const Home = () => {
     return (
         <div className="h-screen relative overflow-hidden">
             {/* App Logo and Title */}
-            <h1 className="absolute left-5 top-5 text-2xl font-bold z-40">RideEase</h1>
+            <h1 className="absolute left-5 top-5 text-2xl font-bold z-40">DriveWayz </h1>
              
             {/* Mobile Menu Button */}
             <div className="absolute right-5 top-5 md:hidden z-50">

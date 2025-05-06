@@ -70,7 +70,7 @@ module.exports.createRide = async ({
         destination,
          otp: getOtp(6),
         fare: fare[ vehicleType ],
-        // createdAt: new Date(),
+        createdAt: new Date(),
     })
 
     return ride;
