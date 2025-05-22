@@ -138,7 +138,7 @@ const CaptianHome = () => {
   return (
     <div className="h-screen relative">
       <div className="fixed p-3 top-0 flex items-center justify-between w-screen z-20 bg-white shadow-md">
-        <h1 className="text-2xl font-bold text-gray-800">DriveWayz </h1>
+        <h1 className="text-2xl font-bold text-gray-800">RideEase </h1>
 
         {/* Mobile Menu Button */}
         <button

@@ -143,13 +143,15 @@ module.exports.endRide = async ({ rideId, captain }) => {
         captain: captain._id
     }).populate('user').populate('captain').select('+otp');
 
+    console.log("in end ride",ride);
+
     if (!ride) {
         throw new Error('Ride not found');
     }
 
-    if (ride.status !== 'ongoing') {
-        throw new Error('Ride not ongoing');
-    }
+    // if (ride.status !== 'ongoing') {
+    //     throw new Error('Ride not ongoing');
+    // }
 
     await ridemodel.findOneAndUpdate({
         _id: rideId
@@ -159,6 +161,9 @@ module.exports.endRide = async ({ rideId, captain }) => {
 
     return ride;
 }
+
+
+
 
 
 

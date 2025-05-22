@@ -49,7 +49,7 @@ const Usersignup = () => {
       <div>
         {/* <img className="w-16 mb-10" src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="logo" />
          */}
-        {/* <h1 className="w-16 ml-8 font-bold text-3xl">DriveWayz </h1> */}
+        {/* <h1 className="w-16 ml-8 font-bold text-3xl">RideEase </h1> */}
 
         <form
           action=""
